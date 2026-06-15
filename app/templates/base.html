@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,7 +8,7 @@
     <script>
         // Apply saved theme before paint to avoid flash
         (function () {
-            const saved = localStorage.getItem('theme') || 'dark';
+            const saved = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-theme', saved);
         })();
     </script>
@@ -45,7 +45,7 @@
         }
 
         // Set icon on load
-        applyTheme(localStorage.getItem('theme') || 'dark');
+        applyTheme(localStorage.getItem('theme') || 'light');
 
         toggle.addEventListener('click', () => {
             const current = document.documentElement.getAttribute('data-theme');
