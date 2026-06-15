@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}The Curious Engineer{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <script>
+        // Apply saved theme before paint to avoid flash
+        (function () {
+            const saved = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', saved);
+        })();
+    </script>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="nav-brand">The Curious Engineer</a>
+        <div class="nav-links">
+            <a href="/blog">Blog</a>
+            <a href="/projects">Projects</a>
+            <a href="/tools/chat">AI Chat</a>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                <span class="theme-icon">☀️</span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>Built with Python + FastAPI &mdash; <a href="https://thecuriousengineer.com">thecuriousengineer.com</a></p>
+    </footer>
+
+    <script>
+        const toggle = document.getElementById('theme-toggle');
+        const icon = toggle.querySelector('.theme-icon');
+
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+            localStorage.setItem('theme', theme);
+        }
+
+        // Set icon on load
+        applyTheme(localStorage.getItem('theme') || 'dark');
+
+        toggle.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            applyTheme(current === 'dark' ? 'light' : 'dark');
+        });
+    </script>
+</body>
+</html>

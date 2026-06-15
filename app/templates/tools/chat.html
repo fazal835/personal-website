@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}AI Chat — The Curious Engineer{% endblock %}
+
+{% block content %}
+<section class="section">
+    <h1>AI Chat</h1>
+    <p class="muted">Powered by Claude. Ask me anything — or ask about my blog posts.</p>
+
+    <div class="chat-container">
+        <div class="chat-messages" id="chat-messages">
+            <div class="chat-msg assistant">
+                <strong>Claude</strong>
+                <p>Hey! Ask me anything. I'm happy to help with tech, AI, or just have a conversation.</p>
+            </div>
+        </div>
+
+        <form class="chat-form" id="chat-form">
+            <input
+                type="text"
+                id="chat-input"
+                placeholder="Type your message..."
+                autocomplete="off"
+                required
+            />
+            <button type="submit" class="btn">Send</button>
+        </form>
+    </div>
+</section>
+
+<script>
+    const form = document.getElementById('chat-form');
+    const input = document.getElementById('chat-input');
+    const messages = document.getElementById('chat-messages');
+
+    function appendMessage(role, text) {
+        const div = document.createElement('div');
+        div.className = `chat-msg ${role}`;
+        div.innerHTML = `<strong>${role === 'user' ? 'You' : 'Claude'}</strong><p>${text}</p>`;
+        messages.appendChild(div);
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const message = input.value.trim();
+        if (!message) return;
+
+        appendMessage('user', message);
+        input.value = '';
+        input.disabled = true;
+
+        try {
+            const res = await fetch('/tools/chat/send', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message }),
+            });
+            const data = await res.json();
+            appendMessage('assistant', data.reply);
+        } catch {
+            appendMessage('assistant', 'Something went wrong. Please try again.');
+        } finally {
+            input.disabled = false;
+            input.focus();
+        }
+    });
+</script>
+{% endblock %}

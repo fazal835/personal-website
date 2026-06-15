@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Blog — The Curious Engineer{% endblock %}
+
+{% block content %}
+<section class="section">
+    <h1>Blog</h1>
+    <p class="muted">Things I read, learn, and want to remember.</p>
+
+    {% if posts %}
+        <div class="post-list">
+            {% for post in posts %}
+            <a href="/blog/{{ post.slug }}" class="post-list-item">
+                <div class="post-meta">
+                    <span class="post-date">{{ post.date }}</span>
+                    <div class="tags">
+                        {% for tag in post.tags %}
+                        <span class="tag">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                <h2>{{ post.title }}</h2>
+                <p>{{ post.summary }}</p>
+            </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="muted">No posts yet. Check back soon.</p>
+    {% endif %}
+</section>
+{% endblock %}

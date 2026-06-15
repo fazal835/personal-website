@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Projects — The Curious Engineer{% endblock %}
+
+{% block content %}
+<section class="section">
+    <h1>Projects</h1>
+    <p class="muted">AI experiments, side projects, and things I built to learn something.</p>
+
+    <div class="project-grid">
+        {% for project in projects %}
+        <div class="project-card">
+            <div class="project-status status-{{ project.status | lower | replace(' ', '-') }}">{{ project.status }}</div>
+            <h2>{{ project.title }}</h2>
+            <p>{{ project.description }}</p>
+            <div class="tags">
+                {% for tag in project.tags %}
+                <span class="tag">{{ tag }}</span>
+                {% endfor %}
+            </div>
+            {% if project.link %}
+            <a href="{{ project.link }}" class="btn btn-sm">Try it &rarr;</a>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
