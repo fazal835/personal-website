@@ -1,84 +1,179 @@
 {% extends "base.html" %}
-
 {% block title %}The Curious Engineer{% endblock %}
-
 {% block content %}
 
+<!-- HERO -->
 <section class="hero">
-    <div class="hero-badge">Engineer · Builder · Learner</div>
-    <h1>The Curious<br><span class="hero-accent">Engineer</span></h1>
-    <p>I write about things I read, build, and want to remember — software, AI experiments, and whatever catches my attention.</p>
-    <div class="hero-links">
-        <a href="/blog" class="btn">Read the Blog</a>
-        <a href="/projects" class="btn btn-outline">See Projects</a>
+    <div class="hero-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="grid-pattern"></div>
     </div>
-    <div class="hero-scroll">↓</div>
+
+    <div class="hero-content">
+        <div class="hero-badge">
+            <span class="badge-dot"></span>
+            Available for side projects
+        </div>
+
+        <h1 class="hero-title">
+            Building things.<br>
+            <span class="gradient-text" id="typewriter"></span>
+        </h1>
+
+        <p class="hero-sub">
+            Engineer by day, curious builder by night. I write about software, AI experiments,
+            and everything I learn along the way.
+        </p>
+
+        <div class="hero-actions">
+            <a href="/blog" class="btn btn-primary">
+                <span>Read the Blog</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="/tools/chat" class="btn btn-ghost">
+                <span>✦</span> Try AI Chat
+            </a>
+        </div>
+
+        <div class="hero-stats">
+            <div class="stat">
+                <span class="stat-num">2</span>
+                <span class="stat-label">Posts</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat">
+                <span class="stat-num">1</span>
+                <span class="stat-label">AI Tool</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat">
+                <span class="stat-num">∞</span>
+                <span class="stat-label">Curiosity</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-scroll-indicator">
+        <div class="scroll-line"></div>
+        <span>Scroll</span>
+    </div>
 </section>
 
-<section class="section fade-in">
-    <div class="section-header">
-        <h2>Recent Writing</h2>
-        <a href="/blog" class="see-all">All posts →</a>
+<!-- RECENT POSTS -->
+<section class="section reveal">
+    <div class="section-label">WRITING</div>
+    <div class="section-head">
+        <h2>Recent Posts</h2>
+        <a href="/blog" class="link-arrow">All posts <span>→</span></a>
     </div>
+
     {% if recent_posts %}
-        <div class="post-grid">
-            {% for post in recent_posts %}
-            <a href="/blog/{{ post.slug }}" class="post-card">
-                <div class="post-card-inner">
-                    <div class="post-card-top">
-                        <div class="tags">
-                            {% for tag in post.tags %}
-                            <span class="tag">{{ tag }}</span>
-                            {% endfor %}
-                        </div>
-                        <span class="post-date">{{ post.date }}</span>
-                    </div>
-                    <h3>{{ post.title }}</h3>
-                    <p>{{ post.summary }}</p>
-                    <span class="read-more">Read more →</span>
+    <div class="cards-grid">
+        {% for post in recent_posts %}
+        <a href="/blog/{{ post.slug }}" class="card">
+            <div class="card-top">
+                <div class="card-tags">
+                    {% for tag in post.tags[:2] %}
+                    <span class="tag">{{ tag }}</span>
+                    {% endfor %}
                 </div>
-            </a>
-            {% endfor %}
-        </div>
+                <span class="card-arrow">↗</span>
+            </div>
+            <h3 class="card-title">{{ post.title }}</h3>
+            <p class="card-desc">{{ post.summary }}</p>
+            <div class="card-footer">
+                <span class="card-date">{{ post.date }}</span>
+                <span class="card-read">Read →</span>
+            </div>
+        </a>
+        {% endfor %}
+
+        <a href="/blog" class="card card-more">
+            <div class="card-more-inner">
+                <span class="card-more-icon">📚</span>
+                <span>See all posts</span>
+                <span class="card-arrow">→</span>
+            </div>
+        </a>
+    </div>
     {% else %}
-        <p class="muted">No posts yet. First one coming soon.</p>
+    <p class="muted">First post coming soon.</p>
     {% endif %}
 </section>
 
-<section class="section fade-in">
-    <div class="section-header">
-        <h2>What I'm Building</h2>
-        <a href="/projects" class="see-all">All projects →</a>
+<!-- WHAT I BUILD -->
+<section class="section reveal">
+    <div class="section-label">PROJECTS</div>
+    <div class="section-head">
+        <h2>What I Build</h2>
+        <a href="/projects" class="link-arrow">All projects <span>→</span></a>
     </div>
-    <div class="feature-strip">
-        <div class="feature-item">
-            <div class="feature-icon">🤖</div>
-            <div>
-                <h4>AI Experiments</h4>
-                <p>Live tools powered by Claude — chat, summarisation, and more.</p>
+
+    <div class="build-grid">
+        <a href="/tools/chat" class="build-card build-featured">
+            <div class="build-icon">🤖</div>
+            <div class="build-body">
+                <div class="build-badge">Live</div>
+                <h3>AI Chat</h3>
+                <p>A Claude-powered chatbot built directly into this site. Ask it anything.</p>
+            </div>
+            <span class="build-arrow">↗</span>
+        </a>
+
+        <div class="build-card">
+            <div class="build-icon">📐</div>
+            <div class="build-body">
+                <div class="build-badge build-badge-soon">Coming Soon</div>
+                <h3>LLD Library</h3>
+                <p>Deep-dive system design walkthroughs with real Java code.</p>
             </div>
         </div>
-        <div class="feature-item">
-            <div class="feature-icon">📝</div>
-            <div>
-                <h4>LLD Deep Dives</h4>
-                <p>Low-level design walkthroughs — loggers, queues, rate limiters.</p>
-            </div>
-        </div>
-        <div class="feature-item">
-            <div class="feature-icon">⚙️</div>
-            <div>
-                <h4>Open Source</h4>
-                <p>Everything I build is public on GitHub.</p>
+
+        <div class="build-card">
+            <div class="build-icon">⚡</div>
+            <div class="build-body">
+                <div class="build-badge build-badge-soon">Coming Soon</div>
+                <h3>AI Experiments</h3>
+                <p>Live demos of whatever AI thing I'm exploring this week.</p>
             </div>
         </div>
     </div>
 </section>
 
-<section class="cta-section fade-in">
-    <h2>Try the AI Chat</h2>
-    <p>Ask me anything — powered by Claude.</p>
-    <a href="/tools/chat" class="btn">Open Chat →</a>
+<!-- CTA -->
+<section class="cta-section reveal">
+    <div class="cta-glow"></div>
+    <div class="cta-content">
+        <div class="cta-emoji">✦</div>
+        <h2>Let's talk engineering</h2>
+        <p>Got a question, idea, or just want to chat about tech? The AI chat is always open.</p>
+        <a href="/tools/chat" class="btn btn-white">
+            Open AI Chat
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+    </div>
 </section>
+
+<script>
+// Typewriter
+const words = ["Writing things.", "Learning things.", "Breaking things.", "Sharing things."];
+let wi = 0, ci = 0, deleting = false;
+const el = document.getElementById('typewriter');
+
+function type() {
+    const word = words[wi];
+    if (!deleting) {
+        el.textContent = word.slice(0, ++ci);
+        if (ci === word.length) { deleting = true; setTimeout(type, 1800); return; }
+    } else {
+        el.textContent = word.slice(0, --ci);
+        if (ci === 0) { deleting = false; wi = (wi + 1) % words.length; }
+    }
+    setTimeout(type, deleting ? 60 : 100);
+}
+type();
+</script>
 
 {% endblock %}
